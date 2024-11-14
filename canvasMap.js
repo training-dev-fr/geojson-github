@@ -39,9 +39,26 @@ export default class CanvasMap {
 
     drawRoad(feature) {
         this.context.beginPath();
-        this.context.drawStyle = "blue";
-        this.context.moveTo((feature.geometry.coordinates[0][0] - this.minX)/this.Xscale*this.canvas.width,(feature.geometry.coordinates[0][1] - this.minY)/this.Yscale*this.canvas.height);
-        this.context.lineTo((feature.geometry.coordinates[1][0] - this.minX)/this.Xscale*this.canvas.width,(feature.geometry.coordinates[1][1] - this.minY)/this.Yscale*this.canvas.height);
+        this.roadStyle(feature);
+        this.context.moveTo((feature.geometry.coordinates[0][0] - this.minX) / this.Xscale * this.canvas.width, (feature.geometry.coordinates[0][1] - this.minY) / this.Yscale * this.canvas.height);
+        this.context.lineTo((feature.geometry.coordinates[1][0] - this.minX) / this.Xscale * this.canvas.width, (feature.geometry.coordinates[1][1] - this.minY) / this.Yscale * this.canvas.height);
         this.context.stroke();
+    }
+
+    roadStyle(feature) {
+        switch (feature.properties.road_type) {
+            case "residential":
+                this.context.strokeStyle = "#606060";
+                this.context.lineWidth = 3;
+                break;
+            case "main":
+                this.context.strokeStyle = "#202020";
+                this.context.lineWidth = 6;
+                break;
+            case "secondary":
+                this.context.strokeStyle = "#40404040";
+                this.context.lineWidth = 2;
+                break;
+        }
     }
 }
